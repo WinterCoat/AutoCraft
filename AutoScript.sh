@@ -4,7 +4,12 @@
 #uncomment if running this initally. For Testing keep this commented... 
 #screen -S 16471.pts-0.RedCraft -L -X stuff 'java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui'
 
-echo "                                         \n _____     _       _____         ___ _   \n|  _  |_ _| |_ ___|     |___ ___|  _| |_ \n|     | | |  _| . |   --|  _| .'|  _|  _|\n|__|__|___|_| |___|_____|_| |__,|_| |_|  \n                                         "
+echo "                                         
+ _____     _       _____         ___ _   
+|  _  |_ _| |_ ___|     |___ ___|  _| |_ 
+|     | | |  _| . |   --|  _| .'|  _|  _|
+|__|__|___|_| |___|_____|_| |__,|_| |_|  
+                                         "
 sleep 1
 echo '...'
 
