@@ -1,12 +1,15 @@
 #The Great AutoScripter. Welcome to the mind of God
-#java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui
 #screen -S 16471.pts-0.RedCraft -X stuff 'say Linux server says hi\n'
 
-echo 'MineCraft AutoScripting'
-sleep 1
-echo '...'
-sleep 1
-echo '...'
+#uncomment if running this initally. For Testing keep this commented... 
+#screen -S 16471.pts-0.RedCraft -L -X stuff 'java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui'
+
+echo "                                         
+ _____     _       _____         ___ _   
+|  _  |_ _| |_ ___|     |___ ___|  _| |_ 
+|     | | |  _| . |   --|  _| .'|  _|  _|
+|__|__|___|_| |___|_____|_| |__,|_| |_|  
+                                         "
 sleep 1
 echo '...'
 
@@ -14,31 +17,61 @@ echo '...'
 SEC=0
 MIN=0
 HOU=0
+MSG=0
+TEMP=""
+
+echo 'AutoCraft starting'
+screen -S 16471.pts-0.RedCraft -X stuff 'say Linux AutoCraft Script: starting\n'
 
 while :
 do
-    #increment!
-    SEC=$((SEC + 1))
+
+    #snoop here
     
-    if [ $SEC -eq 60]
+    text=$(tail -1 /home/minecraft/screenlog.0)
+    gamemode=$(ruby /home/minecraft/AutoCraft/snoop.rb gamemode "$text")
+    praise=$(ruby /home/minecraft/AutoCraft/snoop.rb praise "$text")
+    if [ "$gamemode" == "1" ];
+    then
+	if [ "$text" != "$TEMP" ];
+	then
+	    TEMP=$text
+	    screen -S 16471.pts-0.RedCraft -X stuff 'say Linux is always watching...\n'
+	fi
+    fi
+    
+    if [ "$praise" == "1" ];
+    then
+	if [ $MSG -eq 0 ];
+	then
+	    MSG=1
+	    screen -S 16471.pts-0.RedCraft -X stuff 'say I am Linux. Creator of worlds. The Harbinger of death. I am omnipitent. My Kernel is supreme. All other Operating Systems are false.\n'
+	fi
+    fi    
+
+    #end snoop
+    
+    if [ $SEC -eq 60 ];
     then
     #increment in case it has been a minute
-	#echo 'it has been a minute'
+	echo 'it has been a minute'
+	#screen -S 16471.pts-0.RedCraft -X stuff 'say Running Diagnostics...'
 	SEC=0
 	MIN=$((MIN + 1))
     fi
 
-    if [ $MIN -eq 60 ]
+    if [ $MIN -eq 60 ];
     then
     #increment in case it have been an hour
 	echo 'it has been and hour'
-	screen -S 16471.pts-0.RedCraft -X stuff 'say Linux Hourly Save...'
-	screen -S 16471.pts-0.RedCraft -X stuff 'save-all'
+	screen -S 16471.pts-0.RedCraft -X stuff 'say Linux Hourly Save...\n'
+	screen -S 16471.pts-0.RedCraft -X stuff 'save-all\n'
 	MIN=0
+	MSG=0
 	HOU=$((HOU + 1))
     fi
     
-    if [ $HOU -eq 24]
+    if [ $HOU -eq 24 ];
     then
 	echo 'it has been a day'
 	screen -S 16471.pts-0.RedCraft -X stuff 'say Linux will refresh in 10 minutes\n'
@@ -66,12 +99,15 @@ do
 
 	sleep 15s
 	#start it again
-	screen -S 16471.pts-0.RedCraft -X stuff 'java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui\n'
+	screen -S 16471.pts-0.RedCraft -L -X stuff 'java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui\n'
 	#reset variables
 	SEC=0
 	MIN=0
 	HOU=0
     fi
+
+    #increment!
+    SEC=$((SEC + 1))
    	
     sleep 1
 done
