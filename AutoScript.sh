@@ -12,16 +12,40 @@ echo '...'
 SEC=0
 MIN=0
 HOU=0
+MSG=0
+TEMP=""
+
+echo 'AutoCraft starting'
+screen -S 16471.pts-0.RedCraft -X stuff 'say Linux AutoCraft Script: starting\n'
 
 while :
 do
-    
-    if [ $SEC -eq 0 ];
-    then
-	echo 'AutoCraft starting'
-	screen -S 16471.pts-0.RedCraft -X stuff 'say Linux AutoCraft Script: starting\n'
-    fi
 
+    #snoop here
+    
+    text=$(tail -1 /home/minecraft/screenlog.0)
+    gamemode=$(ruby /home/minecraft/AutoCraft/snoop.rb gamemode "$text")
+    praise=$(ruby /home/minecraft/AutoCraft/snoop.rb praise "$text")
+    if [ "$gamemode" == "1" ];
+    then
+	if [ "$text" != "$TEMP" ];
+	then
+	    TEMP=$text
+	    screen -S 16471.pts-0.RedCraft -X stuff 'say Linux is always watching...\n'
+	fi
+    fi
+    
+    if [ "$praise" == "1" ];
+    then
+	if [ $MSG -eq 0 ];
+	then
+	    MSG=1
+	    screen -S 16471.pts-0.RedCraft -X stuff 'say I am Linux. Creator of worlds. The Harbinger of death. I am omnipitent. My Kernel is supreme. All other Operating Systems are false.\n'
+	fi
+    fi    
+
+    #end snoop
+    
     if [ $SEC -eq 60 ];
     then
     #increment in case it has been a minute
@@ -38,6 +62,7 @@ do
 	screen -S 16471.pts-0.RedCraft -X stuff 'say Linux Hourly Save...\n'
 	screen -S 16471.pts-0.RedCraft -X stuff 'save-all\n'
 	MIN=0
+	MSG=0
 	HOU=$((HOU + 1))
     fi
     
