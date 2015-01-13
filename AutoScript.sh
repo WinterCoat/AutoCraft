@@ -32,15 +32,30 @@ do
     snooper=$(ruby /home/minecraft/AutoCraft/snoop.rb "$text")
     if [ "$snooper" != "0" ];
     then
-	screen -S 16471.pts-0.RedCraft -X stuff "$snooper\n"
+	if [[ $text == *"$"* ]];
+	then
+	    echo 'command registered'
+	else
+	    screen -S 16471.pts-0.RedCraft -X stuff "$snooper\n"
+	fi
     fi
-    
+
     #end snoop
+
+
+    #commands here
+
+    #if [[ $text == *" $" ]];
+    #then
+	#echo 'command registered'
+    #fi
+    
+    #end commands
     
     if [ $SEC -eq 60 ];
     then
     #increment in case it has been a minute
-	echo 'it has been a minute'
+	#echo 'it has been a minute'
 	#screen -S 16471.pts-0.RedCraft -X stuff 'say Running Diagnostics...'
 	SEC=0
 	MIN=$((MIN + 1))
