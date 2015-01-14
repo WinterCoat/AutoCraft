@@ -42,8 +42,10 @@ if !input.include? "[Server]" or input.include? "Server Test:"
     puts "/xp 1 " + user
   elsif input.include? "microsoft"
     puts "UNIX is superiour to DOS in all aspects"
+  elsif input.include? "linux what are the rules" or (input.include? "linux" and input.include? "rules") or input.include? "joined the game"
+    puts "/say DA RULEZ:\n/say 1. The Spawn Island (Nexus) is owned by the Ops. Feel Free to take supplies, but be nice and leave some for others. Go start your own settlement!\n/say 2. City States Outside of Nexus will determine their own governments\n/say 3. Diamonds are the official trading currency with 25 iron = 1 diamond"
   elsif input.include? "linux what are the comands" or input.include? "linux show commands" or (input.include? "linux" and input.include? "commands") or input.include? "linux"
-    puts "/say try the following:\n/say hello linux\n/say what time is it linux\n/say Bash commands starting with identifier $"
+    puts "/say try the following:\n/say => hello linux\n/say => what time is it linux\n/say => linux what are the rules\n/say => Bash commands starting with identifier $"
   else
     puts "0"
   end
