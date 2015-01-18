@@ -3,26 +3,35 @@
 
 #get input and remove the front
 input = ARGV[0]
-
+userdidchat = 0
 #parce the user
-n = input.index('<')
-m = input.index('>')
-user = nil
-if (n and m) != nil
-  user = ARGV[0][n+1..m-1]
-end
-if (user == nil and !input.include? "joined the game")
-  user = input[34..input.rindex(':')-1]
-end
-if user == nil
-  user = input[33..input.rindex(" joined")-1]
+user = input[33..input.length]
+if user[0] == '<'
+  n = user.index('>')
+  user = user[1..n-1]
+  userDidChat = 1
+elsif user[0] == '['
+  if user.include? ":"
+    n = user.index(':')
+  else 
+    n = user.index(']')  
+  end
+  user = user[1..n-1]
+elsif user.include? "joined"
+  user = user[0..user.rindex(" joined")-1]
+else
+  user = nil
 end
 
-
+#parse input here
 if input.include? "$" and (!input.include? "[Server]" or input.include? "Server Test:" or user == "pipininja")
   #Bash Commands Proccessed here
-  @cmd = input[input.index('$')+1..input.length]
-  puts @cmd
+  if (user == "pipininja")
+    @cmd = input[input.index('$')+1..input.length]
+    puts @cmd
+  else
+    puts "/say you do not have the necessary permissions"
+  end
 elsif !(input.include? "[Server]") or input.include? "Server Test:"
   if input.include? "linux what time is it" or input.include? "linux time" or input.include? "what time is it linux"
     time = Time.new
@@ -31,7 +40,7 @@ elsif !(input.include? "[Server]") or input.include? "Server Test:"
     puts "/say hello " + user
   elsif input.include? "what is life" or input.include? "meaning of life" or input.include? "answer to life"
     puts "/say 42"
-  elsif input.include? "fuck you linux" or input.include? "fuck linux" or input.include? "linux sucks" or (input.include? "fuck" and input.include? "linux")
+  elsif input.include? "fuck you linux" or input.include? "fuck linux" or input.include? "linux sucks" or (input.include? "fuck" and input.include? "linux") or input.include? "fuck the server"
     puts "/say Feel My Wrath " + user
     puts "/kill " + user 
   elsif input.include? "Set own game mode to Creative"
@@ -46,8 +55,8 @@ elsif !(input.include? "[Server]") or input.include? "Server Test:"
   elsif input.include? "praise linux"
     puts "/tell " + user + " Worship Me"
     puts "/xp 1 " + user
-  elsif input.include? "microsoft"
-    puts "UNIX is superiour to DOS in all aspects"
+  elsif input.include? "microsoft" or input.include? "windows"
+    puts "/say UNIX is superiour to DOS in all aspects"
   elsif input.include? "linux what are the rules" or (input.include? "linux" and input.include? "rules") or input.include? "joined the game"
     puts "/tell " + user + " ======> Welcome: " + user + " <======"
     puts "/tell " + user + 
@@ -57,7 +66,7 @@ elsif !(input.include? "[Server]") or input.include? "Server Test:"
       " 3. Diamonds are the official trading currency with 25 iron = 1 diamond"
   elsif input.include? "linux what are the comands" or input.include? "linux show commands" or (input.include? "linux" and input.include? "commands") or input.include? "linux" or input.include? "linux help"
     puts "/say try the following:\n/say => hello linux\n/say => what time is it linux\n/say => linux what are the rules\n/say => Bash commands starting with identifier $"
-    elsif input.include? "drowned" or input.include? "blown up" or input.include? "blew up" or input.include? "fell" or input.include? "killed" or input.include? "slain" or input.include? "tried to swim" or input.include? "shot" or input.include? "death"
+    elsif (userdidchat == "1") and (input.include? "drowned" or input.include? "blown up" or input.include? "blew up" or input.include? "fell" or input.include? "killed" or input.include? "slain" or input.include? "tried to swim" or input.include? "shot" or input.include? "death")
     puts "/say lol"
   else
   puts "0"
