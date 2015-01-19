@@ -22,7 +22,7 @@ MSG=0
 TEMP=""
 
 echo 'AutoCraft starting'
-screen -S 19168.RedCraft -X stuff '/say Linux AutoCraft Script: starting\n'
+screen -S 19168.RedCraft -X stuff '/say Linux AutoCraft Script: starting...\n'
 
 while :
 do
@@ -31,7 +31,7 @@ do
     
     text=$(tail -1 /home/minecraft/logs/latest.log)
     snooper=$(ruby /home/minecraft/AutoCraft/snoop.rb "$text")
-    if [ "$snooper" != "0" ];
+    if [ "$snooper" != "0" ] && [ "$snooper" != "/say you do not have the nessisary permissions" ];
     then
 	if [[ $text == *"$"* ]];
 	then
@@ -45,7 +45,12 @@ do
 	    screen -S 19168.RedCraft -X stuff "$snooper\n"
 	fi
     fi
-
+    
+    if [ "$snooper" == "/say you do not have the nessisary permissions" ];
+    then
+	screen -S 19168.RedCraft -X stuff "$snooper\n"
+    fi
+    
     #end snoop
     
     if [ $SEC -eq 60 ];
