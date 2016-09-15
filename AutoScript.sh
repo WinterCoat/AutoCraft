@@ -21,35 +21,37 @@ HOU=0
 MSG=0
 TEMP=""
 
+#24832.RedCraft
+
 echo 'AutoCraft starting'
-screen -S 19168.RedCraft -X stuff '/say Linux AutoCraft Script: starting...\n'
+screen -S 24832.RedCraft -X stuff '/say Linux AutoCraft Script: starting...\n'
 
 while :
 do
 
     #snoop here
     
-    text=$(tail -1 /home/minecraft/logs/latest.log)
-    snooper=$(ruby /home/minecraft/AutoCraft/snoop.rb "$text")
+    text=$(tail -1 ../logs/latest.log)
+    snooper=$(ruby snoop.rb "$text")
     if [ "$snooper" != "0" ] && [ "$snooper" != "/say you do not have the nessisary permissions" ];
     then
-	if [[ $text == *"$"* ]];
+	if [[ $text == *"$"* ]] && [[ $text != $TEMP ]];
 	then
-	    screen -S 19352.MCShell -L -X stuff "$snooper\n"
-	    ret=$(tail -5 /home/minecraft/screenlog.0)
-	    echo $ret
-	    clean=$(ruby /home/minecraft/AutoCraft/cleaner.rb "$ret")
-	    echo $clean
-	    screen -S 19168.RedCraft -X stuff "$clean\n"
+	    #screen -S 19352.MCShell -X stuff "$snooper\n"
+            sleep 1
+	    responce=$(cat MCShell.txt)
+	    clean=$(ruby cleaner.rb "$responce")
+	    screen -S 24832.RedCraft -X stuff "/say raw: $responce\n"
+	    screen -S 24832.RedCraft -X stuff "$clean\n"
 	else
-	    screen -S 19168.RedCraft -X stuff "$snooper\n"
+	    screen -S 24832.RedCraft -X stuff "$snooper\n"
 	fi
     fi
     
-    if [ "$snooper" == "/say you do not have the nessisary permissions" ];
-    then
-	screen -S 19168.RedCraft -X stuff "$snooper\n"
-    fi
+    #if [ "$snooper" == "/say you do not have the nessisary permissions" ];
+    #then
+	#screen -S 24832.RedCraft -X stuff "$snooper\n"
+    #fi
     
     #end snoop
     
@@ -64,8 +66,8 @@ do
     then
     #increment in case it have been an hour
 	echo 'it has been and hour'
-	screen -S 19168.RedCraft -X stuff 'say Linux Hourly Save...\n'
-	screen -S 19168.RedCraft -X stuff 'save-all\n'
+	screen -S 24832.RedCraft -X stuff 'say Linux Hourly Save...\n'
+	screen -S 24832.RedCraft -X stuff 'save-all\n'
 	MIN=0
 	MSG=0
 	HOU=$((HOU + 1))
@@ -74,32 +76,32 @@ do
     if [ $HOU -eq 24 ];
     then
 	echo 'it has been a day'
-	screen -S 19168.RedCraft -X stuff 'say Linux will refresh in 10 minutes\n'
+	screen -S 24832.RedCraft -X stuff 'say Linux will refresh in 10 minutes\n'
 	sleep 5m
-	screen -S 19168.RedCraft -X stuff 'say Linux will refresh in 5 minutes\n'
+	screen -S 24832.RedCraft -X stuff 'say Linux will refresh in 5 minutes\n'
 	sleep 4m
-	screen -S 19168.RedCraft -X stuff 'say Linux will refresh in 1 minutes\n'
+	screen -S 24832.RedCraft -X stuff 'say Linux will refresh in 1 minutes\n'
 	sleep 50s
-	screen -S 19168.RedCraft -X stuff 'say Linux will refresh in 10 seconds\n'
+	screen -S 24832.RedCraft -X stuff 'say Linux will refresh in 10 seconds\n'
 	sleep 5s
-	screen -S 19168.RedCraft -X stuff 'say Linux will refresh in 5 seconds\n'
+	screen -S 24832.RedCraft -X stuff 'say Linux will refresh in 5 seconds\n'
 	sleep 1s
-	screen -S 19168.RedCraft -X stuff 'say 4\n'
+	screen -S 24832.RedCraft -X stuff 'say 4\n'
 	sleep 1s
-	screen -S 19168.RedCraft -X stuff 'say 3\n'
+	screen -S 24832.RedCraft -X stuff 'say 3\n'
 	sleep 1s
-	screen -S 19168.RedCraft -X stuff 'say 2\n'
+	screen -S 24832.RedCraft -X stuff 'say 2\n'
 	sleep 1s
-	screen -S 19168.RedCraft -X stuff 'say 1\n'
+	screen -S 24832.RedCraft -X stuff 'say 1\n'
 	
 	#save all the things
-	screen -S 19168.RedCraft -X stuff 'save-all\n'
+	screen -S 24832.RedCraft -X stuff 'save-all\n'
 	#end it
-	screen -S 19168.RedCraft -X stuff 'stop\n'
+	screen -S 24832.RedCraft -X stuff 'stop\n'
 
 	sleep 15s
 	#start it again
-	screen -S 19168.RedCraft -X stuff 'java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui\n'
+	screen -S 24832.RedCraft -X stuff 'java -Xmx1024M -Xms1024M -jar minecraft_server.jar nogui\n'
 	#reset variables
 	SEC=0
 	MIN=0

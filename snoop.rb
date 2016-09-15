@@ -28,6 +28,7 @@ if input.include? "$" and (!input.include? "[Server]" or input.include? "Server 
   #Bash Commands Proccessed here
   if (user == "pipininja")
     @cmd = input[input.index('$')+1..input.length]
+    @cmd = @cmd + " > /home/minecraft/AutoCraft/MCShell.txt"
     puts @cmd
   else
     puts "/say you do not have the necessary permissions"
